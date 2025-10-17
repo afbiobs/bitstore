@@ -1,4 +1,5 @@
 import {
+    AreaChartOutlined,
     CheckCircleOutlined,
     CodeOutlined,
     ConsoleSqlOutlined,
@@ -44,6 +45,7 @@ import AccessManagement from '@app/entityV2/shared/tabs/Dataset/AccessManagement
 import QueriesTab from '@app/entityV2/shared/tabs/Dataset/Queries/QueriesTab';
 import { SchemaTab } from '@app/entityV2/shared/tabs/Dataset/Schema/SchemaTab';
 import StatsTab from '@app/entityV2/shared/tabs/Dataset/Stats/StatsTab';
+import { TimeSeriesTab, isTimeseriesDataset } from '@app/entityV2/shared/tabs/Dataset/TimeSeries';
 import { AcrylValidationsTab } from '@app/entityV2/shared/tabs/Dataset/Validations/AcrylValidationsTab';
 import ViewDefinitionTab from '@app/entityV2/shared/tabs/Dataset/View/ViewDefinitionTab';
 import { DocumentationTab } from '@app/entityV2/shared/tabs/Documentation/DocumentationTab';
@@ -221,6 +223,15 @@ export class DatasetEntity implements Entity<Dataset> {
                             (dataset?.dataset?.latestPartitionProfile?.length || 0) > 0 ||
                             (dataset?.dataset?.usageStats?.buckets?.length || 0) > 0 ||
                             (dataset?.dataset?.operations?.length || 0) > 0,
+                    },
+                },
+                {
+                    name: 'Time Series',
+                    component: TimeSeriesTab,
+                    icon: AreaChartOutlined,
+                    display: {
+                        visible: (_, dataset: GetDatasetQuery) => isTimeseriesDataset(dataset),
+                        enabled: (_, dataset: GetDatasetQuery) => isTimeseriesDataset(dataset),
                     },
                 },
                 {
